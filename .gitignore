@@ -31,7 +31,6 @@ MANIFEST
 *.jpeg
 *.jpg
 *.wav
-*.png
 ComputerControl/output
 
 # PyInstaller
