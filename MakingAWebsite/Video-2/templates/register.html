@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="wrapper">
+            <div class="nav-left">
+                <a href="/" class="nav-item">Home</a>
+            </div>
+            <div class="nav-right">
+                <a href="#" class="nav-item">About</a>
+                <a href="/register" class="nav-item">Register</a>
+            </div>
+        </div>
+    </nav>
+    <div class="wrapper">
+        <h2>Register</h2>
+        <form action="/register" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+            <input type="submit" value="Register">
+        </form>
+    </div>
+</body>
+
+</html>
