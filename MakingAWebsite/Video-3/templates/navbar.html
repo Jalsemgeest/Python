@@ -1,0 +1,14 @@
+<nav class="navbar">
+    <div class="wrapper">
+        <div class="nav-left">
+            <a href="/" class="nav-item">Home</a>
+        </div>
+        <div class="nav-right">
+            <a href="#" class="nav-item">About</a>
+            {% if header_name is defined %}
+            <a href="#" class="nav-item">{{ header_name }}</a>
+            {% endif %}
+            <a href="/register" class="nav-item">Register</a>
+        </div>
+    </div>
+</nav>
