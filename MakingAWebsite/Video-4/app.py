@@ -5,7 +5,6 @@ import sqlite3
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
-
 def init_db():
     conn = sqlite3.connect("users.db")
     cursor = conn.cursor()
@@ -21,14 +20,11 @@ def init_db():
     conn.commit()
     conn.close()
 
-
 init_db()
-
 
 @app.route("/")
 def home():
     return render_template("index.html")
-    # return "Welcome to the Home Page"
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -36,8 +32,7 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        print(username)
-        print(password)
+        print(username, password)
         if not re.match(r"^[a-zA-Z0-9]+$", username):
             flash("Username must contain only letters and numbers")
         elif len(password) < 6:
@@ -56,7 +51,7 @@ def register():
                 return redirect(url_for("home"))
             except sqlite3.IntegrityError:
                 flash("Username already exists")
-    return render_template("register.html", header_name="Subscribe")
+    return render_template("register.html", header_name="Subscribe!")
 
 
 if __name__ == "__main__":
