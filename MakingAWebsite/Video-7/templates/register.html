@@ -3,7 +3,7 @@
 
 <head>
     <title>Register</title>
-    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
 </head>
 
 <body>
@@ -12,7 +12,7 @@
         <h2>Register</h2>
         {% for message in get_flashed_messages() %}
         <p><i>{{ message }}</i></h1>
-            {% endfor %}
+        {% endfor %}
         <form action="/register" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required><br><br>
