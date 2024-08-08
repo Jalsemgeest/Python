@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Awesome Website!</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <div class="wrapper">
+        <div class="main-content">
+            {% for message in get_flashed_messages() %}
+            <p><i>{{ message }}</i></h1>
+                {% endfor %}
+            <h1>Awesome!</h1>
+            <h2>About Me</h2>
+            <p>This is a paragraph about me.</p>
+            <a href="https://example.com">Visit my blog</a>
+            <img src="/static/profile.jpg" alt="My profile picture">
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+            </ul>
+        </div>
+    </div>
+</body>

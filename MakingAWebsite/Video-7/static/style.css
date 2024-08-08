@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    width: 800px;
+    margin: auto;
+}
+
+/* Navbar container */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+    color: white;
+}
+
+.navbar .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Navbar items */
+.nav-item {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    transition: background-color 0.3s;
+}
+
+/* Home button on the left */
+.nav-left .nav-item {
+    margin-right: auto;
+}
+
+/* Buttons on the right */
+.nav-right .nav-item {
+    margin-left: 10px;
+}
+
+/* Hover effect for navbar items */
+.nav-item:hover {
+    background-color: #555;
+    border-radius: 5px;
+}
+
+/* Flexbox layout for left and right sections */
+.nav-left,
+.nav-right {
+    display: flex;
+    align-items: center;
+}
