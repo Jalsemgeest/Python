@@ -1,0 +1,17 @@
+<nav class="navbar">
+    <div class="wrapper">
+        <div class="nav-left">
+            <a href="/" class="nav-item">Home</a>
+        </div>
+        <div class="nav-right">
+            <a href="#" class="nav-item">About</a>
+            {% if user is defined %}
+            <a href="/dashboard" class="nav-item">Dashboard</a>
+            <a href="{{url_for('logout')}}" class="nav-item">Logout</a>
+            {% else %}
+            <a href="/login" class="nav-item">Log in</a>
+            <a href="/register" class="nav-item">Register</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
