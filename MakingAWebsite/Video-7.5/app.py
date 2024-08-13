@@ -139,6 +139,16 @@ def add_data():
     flash("Data added successfully!")
     return redirect(url_for("dashboard"))
 
+@app.route("/dashboard")
+@login_required
+def dashboard():
+    conn = sqlite3.connect("users.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, content FROM data WHERE user_id = ?", (current_user.id,))
+    user_data = cursor.fetchall()
+    conn.close()
+    return render_template_for_user("dashboard.html", user_data=user_data)
+
 @app.route("/remove_data", methods=["POST"])
 @login_required
 def remove_data():
@@ -149,6 +159,7 @@ def remove_data():
     user_data = cursor.fetchall()
 
     if len(user_data) == 0:
+        conn.close()
         return { "success": False }
     
     cursor.execute("DELETE FROM data WHERE user_id = ? AND id = ?", (current_user.id, id))
@@ -169,6 +180,7 @@ def update_data():
     user_data = cursor.fetchall()
 
     if len(user_data) == 0:
+        conn.close()
         return { "success": False }
     
     cursor.execute("UPDATE data SET content = ? WHERE user_id = ? AND id = ?", (content, current_user.id, id))
@@ -176,18 +188,6 @@ def update_data():
     conn.close()
 
     return { "success": True }
-
-@app.route("/dashboard")
-@login_required
-def dashboard():
-    conn = sqlite3.connect("users.db")
-    cursor = conn.cursor()
-    cursor.execute("SELECT id, content FROM data WHERE user_id = ?", (current_user.id,))
-    user_data = cursor.fetchall()
-    print(user_data)
-    conn.close()
-    return render_template_for_user("dashboard.html", user_data=user_data)
-
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -4,19 +4,16 @@
 <head>
     <title>Dashboard</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
-    <script>
-    </script>
+
     <script>
         function removeData(el) {
-
-            let id = el.dataset.id;
-
+            let dataId = el.dataset.id;
             fetch('/remove_data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ id: id }),
+                body: JSON.stringify({ id: dataId }),
             })
             .then(response => {
                 if (response.ok) {
@@ -32,17 +29,16 @@
         }
 
         function saveUpdatedData(el) {
-
+            let dataId = el.dataset.id;
             let textArea = el.parentNode.children[0];
             let newContent = textArea.value;
-            let id = el.dataset.id;
 
             fetch('/update_data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ id: id, content: newContent }),
+                body: JSON.stringify({ id: dataId, content: newContent }),
             })
             .then(response => {
                 if (response.ok) {
@@ -54,18 +50,14 @@
             })
             .catch(error => {
                 console.error("There was an error: ", error);
-            })
+            });
         }
 
         function updateData(el, currentContent) {
             let id = el.dataset.id;
             let parent = el.parentNode;
 
-            console.log("getting here");
-            console.log(parent)
-
-            // Removing all children
-            parent.innerHTML = `<textarea>${currentContent}</textarea><button data-id="${id}" onclick="saveUpdatedData(this)">Save</button>`;
+            parent.innerHTML = `<textarea cols="50" rows="4">${currentContent}</textarea><button data-id="${id}" onclick="saveUpdatedData(this)">Save</button>`;
         }
     </script>
 </head>
