@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <div class="wrapper">
+        <h2>Super secret stuff</h2>
+        <p>Welcome {{user.username}}!</p>
+        <form action="/add_data" method="post">
+            <label for="content">Add new data:</label><br>
+            <textarea id="content" name="content" rows="4" cols="50" required></textarea><br><br>
+            <input type="submit" value="Add Data">
+        </form>
+
+        <h3>Your Data:</h3>
+        <ul>
+            {% for data in user_data %}
+            <li>{{ data[0] }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+
+</html>
