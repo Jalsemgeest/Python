@@ -3,7 +3,7 @@
 
 <head>
     <title>Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
 </head>
 
 <body>
@@ -11,6 +11,11 @@
     <div class="wrapper">
         <h2>Super secret stuff</h2>
         <p>Welcome {{user.username}}!</p>
+
+        {% for message in get_flashed_messages() %}
+        <p><i>{{ message }}</i></h1>
+        {% endfor %}
+
         <form action="/add_data" method="post">
             <label for="content">Add new data:</label><br>
             <textarea id="content" name="content" rows="4" cols="50" required></textarea><br><br>

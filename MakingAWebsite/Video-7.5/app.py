@@ -144,11 +144,50 @@ def add_data():
 def dashboard():
     conn = sqlite3.connect("users.db")
     cursor = conn.cursor()
-    cursor.execute("SELECT content FROM data WHERE user_id = ?", (current_user.id,))
+    cursor.execute("SELECT id, content FROM data WHERE user_id = ?", (current_user.id,))
     user_data = cursor.fetchall()
     conn.close()
     return render_template_for_user("dashboard.html", user_data=user_data)
 
+@app.route("/remove_data", methods=["POST"])
+@login_required
+def remove_data():
+    id = request.json["id"]
+    conn = sqlite3.connect("users.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, content FROM data WHERE user_id = ? AND id = ?", (current_user.id, id))
+    user_data = cursor.fetchall()
+
+    if len(user_data) == 0:
+        conn.close()
+        return { "success": False }
+    
+    cursor.execute("DELETE FROM data WHERE user_id = ? AND id = ?", (current_user.id, id))
+    conn.commit()
+    conn.close()
+
+    return { "success": True }
+
+@app.route("/update_data", methods=["POST"])
+@login_required
+def update_data():
+    id = request.json["id"]
+    content = request.json["content"]
+
+    conn = sqlite3.connect("users.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, content FROM data WHERE user_id = ? AND id = ?", (current_user.id, id))
+    user_data = cursor.fetchall()
+
+    if len(user_data) == 0:
+        conn.close()
+        return { "success": False }
+    
+    cursor.execute("UPDATE data SET content = ? WHERE user_id = ? AND id = ?", (content, current_user.id, id))
+    conn.commit()
+    conn.close()
+
+    return { "success": True }
 
 if __name__ == "__main__":
     app.run(debug=True)
