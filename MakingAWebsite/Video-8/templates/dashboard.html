@@ -3,7 +3,63 @@
 
 <head>
     <title>Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
+
+    <script>
+        function removeData(el) {
+            let dataId = el.dataset.id;
+            fetch('/remove_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: dataId }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Kind of the lazy way of handling this... but oh well :)
+                    window.location.reload()
+                } else {
+                    console.log("Request failed.");
+                }
+            })
+            .catch(error => {
+                console.error("There was an error: ", error);
+            });
+        }
+
+        function saveUpdatedData(el) {
+            let dataId = el.dataset.id;
+            let textArea = el.parentNode.children[0];
+            let newContent = textArea.value;
+
+            fetch('/update_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: dataId, content: newContent }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Kind of the lazy way of handling this... but oh well :)
+                    window.location.reload()
+                } else {
+                    console.log("Request failed.");
+                }
+            })
+            .catch(error => {
+                console.error("There was an error: ", error);
+            });
+        }
+
+        function updateData(el, currentContent) {
+            let id = el.dataset.id;
+            let parent = el.parentNode;
+
+            parent.innerHTML = `<textarea cols="50" rows="4">${currentContent}</textarea><button data-id="${id}" onclick="saveUpdatedData(this)">Save</button>`;
+        }
+    </script>
 </head>
 
 <body>
@@ -11,6 +67,11 @@
     <div class="wrapper">
         <h2>Super secret stuff</h2>
         <p>Welcome {{user.username}}!</p>
+
+        {% for message in get_flashed_messages() %}
+        <p><i>{{ message }}</i></h1>
+        {% endfor %}
+
         <form action="/add_data" method="post">
             <label for="content">Add new data:</label><br>
             <textarea id="content" name="content" rows="4" cols="50" required></textarea><br><br>
@@ -20,7 +81,11 @@
         <h3>Your Data:</h3>
         <ul>
             {% for data in user_data %}
-            <li>{{ data[0] }}</li>
+            <li>
+                {{ data[1] }}
+                <button data-id="{{data[0]}}" onclick="updateData(this, '{{ data[1] }}')">Update</button>
+                <button data-id="{{data[0]}}" onclick="removeData(this);">Remove</button>
+            </li>
             {% endfor %}
         </ul>
     </div>
